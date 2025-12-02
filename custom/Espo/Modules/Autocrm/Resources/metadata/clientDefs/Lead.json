@@ -1,0 +1,18 @@
+{
+    "views": {
+        "detail": "custom:views/lead/detail"
+    },
+    "menu": {
+        "detail": {
+            "buttons": [
+                {
+                    "label": "Find Contacts",
+                    "name": "findContacts",
+                    "action": "findContacts",
+                    "style": "default",
+                    "acl": "read"
+                }
+            ]
+        }
+    }
+}
