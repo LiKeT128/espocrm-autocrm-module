@@ -22332,6 +22332,16 @@ return [
         'notStorable' => true,
         'notExportable' => true
       ],
+      'cCarServiceRequestsIds' => [
+        'type' => 'jsonArray',
+        'notStorable' => true,
+        'isLinkStub' => true
+      ],
+      'cCarServiceRequestsNames' => [
+        'type' => 'jsonObject',
+        'notStorable' => true,
+        'isLinkStub' => true
+      ],
       'tasksPrimaryIds' => [
         'type' => 'jsonArray',
         'notStorable' => true,
@@ -22533,6 +22543,12 @@ return [
             'key' => 'UNIQ_ENTITY_ID_PHONE_NUMBER_ID_ENTITY_TYPE'
           ]
         ]
+      ],
+      'cCarServiceRequests' => [
+        'type' => 'hasMany',
+        'entity' => 'CCarServiceRequest',
+        'foreignKey' => 'customerId',
+        'foreign' => 'customer'
       ],
       'tasksPrimary' => [
         'type' => 'hasMany',
@@ -32008,6 +32024,357 @@ return [
           0 => 'emailId'
         ],
         'key' => 'IDX_EMAIL_ID'
+      ]
+    ],
+    'collection' => [
+      'orderBy' => 'createdAt',
+      'order' => 'DESC'
+    ]
+  ],
+  'CCarServiceRequest' => [
+    'attributes' => [
+      'id' => [
+        'len' => 17,
+        'dbType' => 'string',
+        'type' => 'id'
+      ],
+      'name' => [
+        'type' => 'varchar',
+        'fieldType' => 'varchar',
+        'len' => 255
+      ],
+      'deleted' => [
+        'type' => 'bool',
+        'default' => false
+      ],
+      'description' => [
+        'type' => 'text',
+        'fieldType' => 'text'
+      ],
+      'createdAt' => [
+        'type' => 'datetime',
+        'notNull' => false,
+        'fieldType' => 'datetime'
+      ],
+      'modifiedAt' => [
+        'type' => 'datetime',
+        'notNull' => false,
+        'fieldType' => 'datetime'
+      ],
+      'carModel' => [
+        'type' => 'varchar',
+        'len' => 100,
+        'fieldType' => 'varchar'
+      ],
+      'serviceType' => [
+        'type' => 'varchar',
+        'len' => 100,
+        'default' => 'Oil Change',
+        'fieldType' => 'varchar'
+      ],
+      'streamUpdatedAt' => [
+        'type' => 'datetime',
+        'notNull' => false,
+        'fieldType' => 'datetime'
+      ],
+      'createdById' => [
+        'len' => 17,
+        'dbType' => 'string',
+        'type' => 'foreignId',
+        'index' => true,
+        'attributeRole' => 'id',
+        'fieldType' => 'link',
+        'notNull' => false
+      ],
+      'createdByName' => [
+        'type' => 'foreign',
+        'notStorable' => true,
+        'attributeRole' => 'name',
+        'fieldType' => 'link',
+        'relation' => 'createdBy',
+        'foreign' => 'name',
+        'foreignType' => 'varchar'
+      ],
+      'modifiedById' => [
+        'len' => 17,
+        'dbType' => 'string',
+        'type' => 'foreignId',
+        'index' => true,
+        'attributeRole' => 'id',
+        'fieldType' => 'link',
+        'notNull' => false
+      ],
+      'modifiedByName' => [
+        'type' => 'foreign',
+        'notStorable' => true,
+        'attributeRole' => 'name',
+        'fieldType' => 'link',
+        'relation' => 'modifiedBy',
+        'foreign' => 'name',
+        'foreignType' => 'varchar'
+      ],
+      'assignedUserId' => [
+        'len' => 17,
+        'dbType' => 'string',
+        'type' => 'foreignId',
+        'index' => true,
+        'attributeRole' => 'id',
+        'fieldType' => 'link',
+        'notNull' => false
+      ],
+      'assignedUserName' => [
+        'type' => 'foreign',
+        'notStorable' => true,
+        'attributeRole' => 'name',
+        'fieldType' => 'link',
+        'relation' => 'assignedUser',
+        'foreign' => 'name',
+        'foreignType' => 'varchar'
+      ],
+      'teamsIds' => [
+        'type' => 'jsonArray',
+        'notStorable' => true,
+        'isLinkMultipleIdList' => true,
+        'relation' => 'teams',
+        'isUnordered' => true,
+        'attributeRole' => 'idList',
+        'fieldType' => 'linkMultiple'
+      ],
+      'teamsNames' => [
+        'type' => 'jsonObject',
+        'notStorable' => true,
+        'isLinkMultipleNameMap' => true,
+        'attributeRole' => 'nameMap',
+        'fieldType' => 'linkMultiple'
+      ],
+      'customerId' => [
+        'len' => 17,
+        'dbType' => 'string',
+        'type' => 'foreignId',
+        'index' => true,
+        'attributeRole' => 'id',
+        'fieldType' => 'link',
+        'notNull' => false
+      ],
+      'customerName' => [
+        'type' => 'foreign',
+        'notStorable' => true,
+        'attributeRole' => 'name',
+        'fieldType' => 'link',
+        'relation' => 'customer',
+        'foreign' => 'name',
+        'foreignType' => 'varchar'
+      ],
+      'isFollowed' => [
+        'type' => 'bool',
+        'notStorable' => true,
+        'notExportable' => true,
+        'default' => false
+      ],
+      'followersIds' => [
+        'type' => 'jsonArray',
+        'notStorable' => true,
+        'notExportable' => true
+      ],
+      'followersNames' => [
+        'type' => 'jsonObject',
+        'notStorable' => true,
+        'notExportable' => true
+      ],
+      'emailsIds' => [
+        'type' => 'jsonArray',
+        'notStorable' => true,
+        'isLinkStub' => true
+      ],
+      'emailsNames' => [
+        'type' => 'jsonObject',
+        'notStorable' => true,
+        'isLinkStub' => true
+      ],
+      'tasksIds' => [
+        'type' => 'jsonArray',
+        'notStorable' => true,
+        'isLinkStub' => true
+      ],
+      'tasksNames' => [
+        'type' => 'jsonObject',
+        'notStorable' => true,
+        'isLinkStub' => true
+      ],
+      'callsIds' => [
+        'type' => 'jsonArray',
+        'notStorable' => true,
+        'isLinkStub' => true
+      ],
+      'callsNames' => [
+        'type' => 'jsonObject',
+        'notStorable' => true,
+        'isLinkStub' => true
+      ],
+      'meetingsIds' => [
+        'type' => 'jsonArray',
+        'notStorable' => true,
+        'isLinkStub' => true
+      ],
+      'meetingsNames' => [
+        'type' => 'jsonObject',
+        'notStorable' => true,
+        'isLinkStub' => true
+      ]
+    ],
+    'relations' => [
+      'customer' => [
+        'type' => 'belongsTo',
+        'entity' => 'Contact',
+        'key' => 'customerId',
+        'foreignKey' => 'id',
+        'foreign' => 'cCarServiceRequests'
+      ],
+      'emails' => [
+        'type' => 'hasChildren',
+        'entity' => 'Email',
+        'foreignKey' => 'parentId',
+        'foreignType' => 'parentType',
+        'foreign' => 'parent'
+      ],
+      'tasks' => [
+        'type' => 'hasChildren',
+        'entity' => 'Task',
+        'foreignKey' => 'parentId',
+        'foreignType' => 'parentType',
+        'foreign' => 'parent'
+      ],
+      'calls' => [
+        'type' => 'hasMany',
+        'entity' => 'Call',
+        'foreignKey' => 'parentId',
+        'foreign' => 'parent'
+      ],
+      'meetings' => [
+        'type' => 'hasMany',
+        'entity' => 'Meeting',
+        'foreignKey' => 'parentId',
+        'foreign' => 'parent'
+      ],
+      'teams' => [
+        'type' => 'manyMany',
+        'entity' => 'Team',
+        'relationName' => 'entityTeam',
+        'midKeys' => [
+          0 => 'entityId',
+          1 => 'teamId'
+        ],
+        'conditions' => [
+          'entityType' => 'CCarServiceRequest'
+        ],
+        'additionalColumns' => [
+          'entityType' => [
+            'type' => 'varchar',
+            'len' => 100
+          ]
+        ],
+        'indexes' => [
+          'entityId' => [
+            'columns' => [
+              0 => 'entityId'
+            ],
+            'key' => 'IDX_ENTITY_ID'
+          ],
+          'teamId' => [
+            'columns' => [
+              0 => 'teamId'
+            ],
+            'key' => 'IDX_TEAM_ID'
+          ],
+          'entityId_teamId_entityType' => [
+            'type' => 'unique',
+            'columns' => [
+              0 => 'entityId',
+              1 => 'teamId',
+              2 => 'entityType'
+            ],
+            'key' => 'UNIQ_ENTITY_ID_TEAM_ID_ENTITY_TYPE'
+          ]
+        ]
+      ],
+      'assignedUser' => [
+        'type' => 'belongsTo',
+        'entity' => 'User',
+        'key' => 'assignedUserId',
+        'foreignKey' => 'id',
+        'foreign' => NULL
+      ],
+      'modifiedBy' => [
+        'type' => 'belongsTo',
+        'entity' => 'User',
+        'key' => 'modifiedById',
+        'foreignKey' => 'id',
+        'foreign' => NULL
+      ],
+      'createdBy' => [
+        'type' => 'belongsTo',
+        'entity' => 'User',
+        'key' => 'createdById',
+        'foreignKey' => 'id',
+        'foreign' => NULL
+      ]
+    ],
+    'indexes' => [
+      'name' => [
+        'columns' => [
+          0 => 'name',
+          1 => 'deleted'
+        ],
+        'key' => 'IDX_NAME'
+      ],
+      'assignedUser' => [
+        'columns' => [
+          0 => 'assignedUserId',
+          1 => 'deleted'
+        ],
+        'key' => 'IDX_ASSIGNED_USER'
+      ],
+      'createdAt' => [
+        'columns' => [
+          0 => 'createdAt'
+        ],
+        'key' => 'IDX_CREATED_AT'
+      ],
+      'createdAtId' => [
+        'unique' => true,
+        'columns' => [
+          0 => 'createdAt',
+          1 => 'id'
+        ],
+        'key' => 'UNIQ_CREATED_AT_ID'
+      ],
+      'createdById' => [
+        'type' => 'index',
+        'columns' => [
+          0 => 'createdById'
+        ],
+        'key' => 'IDX_CREATED_BY_ID'
+      ],
+      'modifiedById' => [
+        'type' => 'index',
+        'columns' => [
+          0 => 'modifiedById'
+        ],
+        'key' => 'IDX_MODIFIED_BY_ID'
+      ],
+      'assignedUserId' => [
+        'type' => 'index',
+        'columns' => [
+          0 => 'assignedUserId'
+        ],
+        'key' => 'IDX_ASSIGNED_USER_ID'
+      ],
+      'customerId' => [
+        'type' => 'index',
+        'columns' => [
+          0 => 'customerId'
+        ],
+        'key' => 'IDX_CUSTOMER_ID'
       ]
     ],
     'collection' => [

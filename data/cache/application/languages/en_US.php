@@ -1735,7 +1735,8 @@ Field removal does not remove data from the database. Data from the database wil
       'KnowledgeBaseArticle' => 'Knowledge Base Article',
       'KnowledgeBaseCategory' => 'Knowledge Base Category',
       'CampaignLogRecord' => 'Campaign Log Record',
-      'TargetListCategory' => 'Target List Category'
+      'TargetListCategory' => 'Target List Category',
+      'CCarServiceRequest' => 'Car Service Request'
     ],
     'scopeNamesPlural' => [
       'Note' => 'Notes',
@@ -1815,7 +1816,8 @@ Field removal does not remove data from the database. Data from the database wil
       'KnowledgeBaseArticle' => 'Knowledge Base',
       'KnowledgeBaseCategory' => 'Knowledge Base Categories',
       'CampaignLogRecord' => 'Campaign Log Records',
-      'TargetListCategory' => 'Target List Categories'
+      'TargetListCategory' => 'Target List Categories',
+      'CCarServiceRequest' => 'Car Service Requests'
     ],
     'labels' => [
       'Previous Page' => 'Previous Page',
@@ -4870,7 +4872,8 @@ Leave the field empty if you need to apply the exception only for specific users
       'accountIsInactive' => 'Account Inactive',
       'acceptanceStatusMeetings' => 'Acceptance Status (Meetings)',
       'acceptanceStatusCalls' => 'Acceptance Status (Calls)',
-      'originalEmail' => 'Original Email'
+      'originalEmail' => 'Original Email',
+      'cCarServiceRequests' => 'Car Service Requests'
     ],
     'links' => [
       'opportunities' => 'Opportunities',
@@ -4885,7 +4888,8 @@ Leave the field empty if you need to apply the exception only for specific users
       'opportunitiesPrimary' => 'Opportunities (Primary)',
       'portalUser' => 'Portal User',
       'originalLead' => 'Original Lead',
-      'documents' => 'Documents'
+      'documents' => 'Documents',
+      'cCarServiceRequests' => 'Car Service Requests'
     ],
     'labels' => [
       'Create Contact' => 'Create Contact'
@@ -5395,6 +5399,31 @@ Leave the field empty if you need to apply the exception only for specific users
     ],
     'nameOptions' => [
       'replyToEmail' => 'Reply to email'
+    ]
+  ],
+  'CCarServiceRequest' => [
+    'fields' => [
+      'customer' => 'Contact',
+      'carModel' => '**carModel**',
+      'serviceType' => '**serviceType**'
+    ],
+    'links' => [
+      'meetings' => 'Meetings',
+      'calls' => 'Calls',
+      'tasks' => 'Tasks',
+      'customer' => 'Contact'
+    ],
+    'labels' => [
+      'Create CCarServiceRequest' => 'Create Car Service Request'
+    ],
+    'options' => [
+      'serviceType' => [
+        '(one per line)' => '(one per line)',
+        'Oil Change' => 'Oil Change',
+        'Tires' => 'Tires',
+        'Brake Repair' => 'Brake Repair',
+        'Full Service' => 'Full Service'
+      ]
     ]
   ]
 ];

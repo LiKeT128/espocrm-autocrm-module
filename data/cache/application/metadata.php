@@ -132,6 +132,10 @@ return [
       ],
       'contactLink' => 'contacts',
       'accountLink' => 'account'
+    ],
+    'CCarServiceRequest' => [
+      'contactLink' => NULL,
+      'accountLink' => NULL
     ]
   ],
   'app' => [
@@ -7810,6 +7814,10 @@ return [
         ],
         'calls' => [
           'createHandler' => 'handlers/create-related/set-parent'
+        ],
+        'carServiceRequests' => [
+          'layout' => NULL,
+          'selectPrimaryFilterName' => NULL
         ]
       ],
       'boolFilterList' => [
@@ -8745,6 +8753,51 @@ return [
       ],
       'iconClass' => 'fas fa-tasks',
       'kanbanViewMode' => true
+    ],
+    'CCarServiceRequest' => [
+      'controller' => 'controllers/record',
+      'boolFilterList' => [
+        0 => 'onlyMy'
+      ],
+      'sidePanels' => [
+        'detail' => [
+          0 => [
+            'name' => 'activities',
+            'reference' => 'activities'
+          ],
+          1 => [
+            'name' => 'history',
+            'reference' => 'history'
+          ],
+          2 => [
+            'name' => 'tasks',
+            'reference' => 'tasks'
+          ]
+        ]
+      ],
+      'bottomPanels' => [
+        'detail' => [
+          0 => [
+            'name' => 'activities',
+            'reference' => 'activities',
+            'disabled' => true
+          ],
+          1 => [
+            'name' => 'history',
+            'reference' => 'history',
+            'disabled' => true
+          ]
+        ]
+      ],
+      'relationshipPanels' => [
+        'customer' => [
+          'layout' => NULL,
+          'selectPrimaryFilterName' => NULL
+        ]
+      ],
+      'kanbanViewMode' => false,
+      'color' => '#692ace',
+      'iconClass' => 'fas fa-arrow-up-from-water-pump'
     ]
   ],
   'dashlets' => [
@@ -12046,7 +12099,8 @@ return [
             1 => 'Lead',
             2 => 'Contact',
             3 => 'Opportunity',
-            4 => 'Case'
+            4 => 'Case',
+            5 => 'CCarServiceRequest'
           ]
         ],
         'dateSent' => [
@@ -20040,7 +20094,8 @@ return [
             1 => 'Lead',
             2 => 'Contact',
             3 => 'Opportunity',
-            4 => 'Case'
+            4 => 'Case',
+            5 => 'CCarServiceRequest'
           ]
         ],
         'account' => [
@@ -22270,6 +22325,13 @@ return [
           'entity' => 'Task',
           'foreign' => 'contact',
           'layoutRelationshipsDisabled' => true
+        ],
+        'cCarServiceRequests' => [
+          'type' => 'hasMany',
+          'foreign' => 'customer',
+          'entity' => 'CCarServiceRequest',
+          'audited' => false,
+          'isCustom' => true
         ]
       ],
       'collection' => [
@@ -23795,7 +23857,8 @@ return [
             1 => 'Lead',
             2 => 'Contact',
             3 => 'Opportunity',
-            4 => 'Case'
+            4 => 'Case',
+            5 => 'CCarServiceRequest'
           ]
         ],
         'account' => [
@@ -25525,7 +25588,8 @@ return [
             1 => 'Contact',
             2 => 'Lead',
             3 => 'Opportunity',
-            4 => 'Case'
+            4 => 'Case',
+            5 => 'CCarServiceRequest'
           ]
         ],
         'account' => [
@@ -25678,6 +25742,164 @@ return [
       ],
       'repositoryClassName' => 'Espo\\Core\\Repositories\\Event',
       'optimisticConcurrencyControl' => true
+    ],
+    'CCarServiceRequest' => [
+      'fields' => [
+        'name' => [
+          'type' => 'varchar',
+          'required' => true,
+          'pattern' => '$noBadCharacters'
+        ],
+        'description' => [
+          'type' => 'text'
+        ],
+        'createdAt' => [
+          'type' => 'datetime',
+          'readOnly' => true
+        ],
+        'modifiedAt' => [
+          'type' => 'datetime',
+          'readOnly' => true
+        ],
+        'createdBy' => [
+          'type' => 'link',
+          'readOnly' => true,
+          'view' => 'views/fields/user'
+        ],
+        'modifiedBy' => [
+          'type' => 'link',
+          'readOnly' => true,
+          'view' => 'views/fields/user'
+        ],
+        'assignedUser' => [
+          'type' => 'link',
+          'required' => false,
+          'view' => 'views/fields/assigned-user'
+        ],
+        'teams' => [
+          'type' => 'linkMultiple',
+          'view' => 'views/fields/teams'
+        ],
+        'customer' => [
+          'type' => 'link'
+        ],
+        'carModel' => [
+          'type' => 'varchar',
+          'maxLength' => 100,
+          'options' => [],
+          'isCustom' => true
+        ],
+        'serviceType' => [
+          'type' => 'enum',
+          'required' => true,
+          'options' => [
+            0 => 'Oil Change',
+            1 => 'Tires',
+            2 => 'Brake Repair',
+            3 => 'Full Service'
+          ],
+          'style' => [
+            'Oil Change' => NULL,
+            'Tires' => NULL,
+            'Brake Repair' => NULL,
+            'Full Service' => NULL
+          ],
+          'default' => 'Oil Change',
+          'maxLength' => 100,
+          'isCustom' => true
+        ],
+        'streamUpdatedAt' => [
+          'type' => 'datetime',
+          'readOnly' => true,
+          'customizationReadOnlyDisabled' => true
+        ]
+      ],
+      'links' => [
+        'createdBy' => [
+          'type' => 'belongsTo',
+          'entity' => 'User'
+        ],
+        'modifiedBy' => [
+          'type' => 'belongsTo',
+          'entity' => 'User'
+        ],
+        'assignedUser' => [
+          'type' => 'belongsTo',
+          'entity' => 'User'
+        ],
+        'teams' => [
+          'type' => 'hasMany',
+          'entity' => 'Team',
+          'relationName' => 'entityTeam',
+          'layoutRelationshipsDisabled' => true
+        ],
+        'meetings' => [
+          'type' => 'hasMany',
+          'entity' => 'Meeting',
+          'foreign' => 'parent'
+        ],
+        'calls' => [
+          'type' => 'hasMany',
+          'entity' => 'Call',
+          'foreign' => 'parent'
+        ],
+        'tasks' => [
+          'type' => 'hasChildren',
+          'entity' => 'Task',
+          'foreign' => 'parent'
+        ],
+        'emails' => [
+          'type' => 'hasChildren',
+          'entity' => 'Email',
+          'foreign' => 'parent',
+          'layoutRelationshipsDisabled' => true
+        ],
+        'customer' => [
+          'type' => 'belongsTo',
+          'foreign' => 'cCarServiceRequests',
+          'entity' => 'Contact',
+          'audited' => false,
+          'isCustom' => true
+        ]
+      ],
+      'collection' => [
+        'orderBy' => 'createdAt',
+        'order' => 'desc',
+        'textFilterFields' => [
+          0 => 'name'
+        ],
+        'fullTextSearch' => false,
+        'countDisabled' => false,
+        'sortBy' => 'createdAt',
+        'asc' => false
+      ],
+      'indexes' => [
+        'name' => [
+          'columns' => [
+            0 => 'name',
+            1 => 'deleted'
+          ]
+        ],
+        'assignedUser' => [
+          'columns' => [
+            0 => 'assignedUserId',
+            1 => 'deleted'
+          ]
+        ],
+        'createdAt' => [
+          'columns' => [
+            0 => 'createdAt'
+          ]
+        ],
+        'createdAtId' => [
+          'unique' => true,
+          'columns' => [
+            0 => 'createdAt',
+            1 => 'id'
+          ]
+        ]
+      ],
+      'optimisticConcurrencyControl' => false
     ]
   ],
   'fields' => [
@@ -30902,6 +31124,30 @@ return [
       'beforeUnlinkHookClassNameList' => [],
       'afterLinkHookClassNameList' => [],
       'afterUnlinkHookClassNameList' => []
+    ],
+    'CCarServiceRequest' => [
+      'duplicateWhereBuilderClassName' => 'Espo\\Classes\\DuplicateWhereBuilders\\General',
+      'updateDuplicateCheck' => false,
+      'readLoaderClassNameList' => [],
+      'listLoaderClassNameList' => [],
+      'saverClassNameList' => [],
+      'selectApplierClassNameList' => [],
+      'createInputFilterClassNameList' => [],
+      'updateInputFilterClassNameList' => [],
+      'outputFilterClassNameList' => [],
+      'beforeReadHookClassNameList' => [],
+      'earlyBeforeCreateHookClassNameList' => [],
+      'beforeCreateHookClassNameList' => [],
+      'earlyBeforeUpdateHookClassNameList' => [],
+      'beforeUpdateHookClassNameList' => [],
+      'beforeDeleteHookClassNameList' => [],
+      'afterCreateHookClassNameList' => [],
+      'afterUpdateHookClassNameList' => [],
+      'afterDeleteHookClassNameList' => [],
+      'beforeLinkHookClassNameList' => [],
+      'beforeUnlinkHookClassNameList' => [],
+      'afterLinkHookClassNameList' => [],
+      'afterUnlinkHookClassNameList' => []
     ]
   ],
   'scopes' => [
@@ -31818,6 +32064,36 @@ return [
         1 => 'Deferred'
       ],
       'statusFieldLocked' => true
+    ],
+    'CCarServiceRequest' => [
+      'entity' => true,
+      'layouts' => true,
+      'tab' => true,
+      'acl' => true,
+      'aclPortal' => true,
+      'aclPortalLevelList' => [
+        0 => 'all',
+        1 => 'account',
+        2 => 'contact',
+        3 => 'own',
+        4 => 'no'
+      ],
+      'customizable' => true,
+      'importable' => true,
+      'notifications' => true,
+      'stream' => true,
+      'disabled' => false,
+      'type' => 'BasePlus',
+      'module' => 'Custom',
+      'object' => true,
+      'isCustom' => true,
+      'statusField' => NULL,
+      'kanbanStatusIgnoreList' => NULL,
+      'stars' => false,
+      'preserveAuditLog' => false,
+      'duplicateCheckFieldList' => [],
+      'collaborators' => false,
+      'assignedUsers' => false
     ]
   ],
   'selectDefs' => [

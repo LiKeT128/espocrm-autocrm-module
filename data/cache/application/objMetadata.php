@@ -132,6 +132,10 @@ return (object) [
       ],
       'contactLink' => 'contacts',
       'accountLink' => 'account'
+    ],
+    'CCarServiceRequest' => (object) [
+      'contactLink' => NULL,
+      'accountLink' => NULL
     ]
   ],
   'app' => (object) [
@@ -7810,6 +7814,10 @@ return (object) [
         ],
         'calls' => (object) [
           'createHandler' => 'handlers/create-related/set-parent'
+        ],
+        'carServiceRequests' => (object) [
+          'layout' => NULL,
+          'selectPrimaryFilterName' => NULL
         ]
       ],
       'boolFilterList' => [
@@ -8745,6 +8753,51 @@ return (object) [
       ],
       'iconClass' => 'fas fa-tasks',
       'kanbanViewMode' => true
+    ],
+    'CCarServiceRequest' => (object) [
+      'controller' => 'controllers/record',
+      'boolFilterList' => [
+        0 => 'onlyMy'
+      ],
+      'sidePanels' => (object) [
+        'detail' => [
+          0 => (object) [
+            'name' => 'activities',
+            'reference' => 'activities'
+          ],
+          1 => (object) [
+            'name' => 'history',
+            'reference' => 'history'
+          ],
+          2 => (object) [
+            'name' => 'tasks',
+            'reference' => 'tasks'
+          ]
+        ]
+      ],
+      'bottomPanels' => (object) [
+        'detail' => [
+          0 => (object) [
+            'name' => 'activities',
+            'reference' => 'activities',
+            'disabled' => true
+          ],
+          1 => (object) [
+            'name' => 'history',
+            'reference' => 'history',
+            'disabled' => true
+          ]
+        ]
+      ],
+      'relationshipPanels' => (object) [
+        'customer' => (object) [
+          'layout' => NULL,
+          'selectPrimaryFilterName' => NULL
+        ]
+      ],
+      'kanbanViewMode' => false,
+      'color' => '#692ace',
+      'iconClass' => 'fas fa-arrow-up-from-water-pump'
     ]
   ],
   'dashlets' => (object) [
@@ -12046,7 +12099,8 @@ return (object) [
             1 => 'Lead',
             2 => 'Contact',
             3 => 'Opportunity',
-            4 => 'Case'
+            4 => 'Case',
+            5 => 'CCarServiceRequest'
           ]
         ],
         'dateSent' => (object) [
@@ -20040,7 +20094,8 @@ return (object) [
             1 => 'Lead',
             2 => 'Contact',
             3 => 'Opportunity',
-            4 => 'Case'
+            4 => 'Case',
+            5 => 'CCarServiceRequest'
           ]
         ],
         'account' => (object) [
@@ -22270,6 +22325,13 @@ return (object) [
           'entity' => 'Task',
           'foreign' => 'contact',
           'layoutRelationshipsDisabled' => true
+        ],
+        'cCarServiceRequests' => (object) [
+          'type' => 'hasMany',
+          'foreign' => 'customer',
+          'entity' => 'CCarServiceRequest',
+          'audited' => false,
+          'isCustom' => true
         ]
       ],
       'collection' => (object) [
@@ -23795,7 +23857,8 @@ return (object) [
             1 => 'Lead',
             2 => 'Contact',
             3 => 'Opportunity',
-            4 => 'Case'
+            4 => 'Case',
+            5 => 'CCarServiceRequest'
           ]
         ],
         'account' => (object) [
@@ -25525,7 +25588,8 @@ return (object) [
             1 => 'Contact',
             2 => 'Lead',
             3 => 'Opportunity',
-            4 => 'Case'
+            4 => 'Case',
+            5 => 'CCarServiceRequest'
           ]
         ],
         'account' => (object) [
@@ -25678,6 +25742,164 @@ return (object) [
       ],
       'repositoryClassName' => 'Espo\\Core\\Repositories\\Event',
       'optimisticConcurrencyControl' => true
+    ],
+    'CCarServiceRequest' => (object) [
+      'fields' => (object) [
+        'name' => (object) [
+          'type' => 'varchar',
+          'required' => true,
+          'pattern' => '$noBadCharacters'
+        ],
+        'description' => (object) [
+          'type' => 'text'
+        ],
+        'createdAt' => (object) [
+          'type' => 'datetime',
+          'readOnly' => true
+        ],
+        'modifiedAt' => (object) [
+          'type' => 'datetime',
+          'readOnly' => true
+        ],
+        'createdBy' => (object) [
+          'type' => 'link',
+          'readOnly' => true,
+          'view' => 'views/fields/user'
+        ],
+        'modifiedBy' => (object) [
+          'type' => 'link',
+          'readOnly' => true,
+          'view' => 'views/fields/user'
+        ],
+        'assignedUser' => (object) [
+          'type' => 'link',
+          'required' => false,
+          'view' => 'views/fields/assigned-user'
+        ],
+        'teams' => (object) [
+          'type' => 'linkMultiple',
+          'view' => 'views/fields/teams'
+        ],
+        'customer' => (object) [
+          'type' => 'link'
+        ],
+        'carModel' => (object) [
+          'type' => 'varchar',
+          'maxLength' => 100,
+          'options' => [],
+          'isCustom' => true
+        ],
+        'serviceType' => (object) [
+          'type' => 'enum',
+          'required' => true,
+          'options' => [
+            0 => 'Oil Change',
+            1 => 'Tires',
+            2 => 'Brake Repair',
+            3 => 'Full Service'
+          ],
+          'style' => (object) [
+            'Oil Change' => NULL,
+            'Tires' => NULL,
+            'Brake Repair' => NULL,
+            'Full Service' => NULL
+          ],
+          'default' => 'Oil Change',
+          'maxLength' => 100,
+          'isCustom' => true
+        ],
+        'streamUpdatedAt' => (object) [
+          'type' => 'datetime',
+          'readOnly' => true,
+          'customizationReadOnlyDisabled' => true
+        ]
+      ],
+      'links' => (object) [
+        'createdBy' => (object) [
+          'type' => 'belongsTo',
+          'entity' => 'User'
+        ],
+        'modifiedBy' => (object) [
+          'type' => 'belongsTo',
+          'entity' => 'User'
+        ],
+        'assignedUser' => (object) [
+          'type' => 'belongsTo',
+          'entity' => 'User'
+        ],
+        'teams' => (object) [
+          'type' => 'hasMany',
+          'entity' => 'Team',
+          'relationName' => 'entityTeam',
+          'layoutRelationshipsDisabled' => true
+        ],
+        'meetings' => (object) [
+          'type' => 'hasMany',
+          'entity' => 'Meeting',
+          'foreign' => 'parent'
+        ],
+        'calls' => (object) [
+          'type' => 'hasMany',
+          'entity' => 'Call',
+          'foreign' => 'parent'
+        ],
+        'tasks' => (object) [
+          'type' => 'hasChildren',
+          'entity' => 'Task',
+          'foreign' => 'parent'
+        ],
+        'emails' => (object) [
+          'type' => 'hasChildren',
+          'entity' => 'Email',
+          'foreign' => 'parent',
+          'layoutRelationshipsDisabled' => true
+        ],
+        'customer' => (object) [
+          'type' => 'belongsTo',
+          'foreign' => 'cCarServiceRequests',
+          'entity' => 'Contact',
+          'audited' => false,
+          'isCustom' => true
+        ]
+      ],
+      'collection' => (object) [
+        'orderBy' => 'createdAt',
+        'order' => 'desc',
+        'textFilterFields' => [
+          0 => 'name'
+        ],
+        'fullTextSearch' => false,
+        'countDisabled' => false,
+        'sortBy' => 'createdAt',
+        'asc' => false
+      ],
+      'indexes' => (object) [
+        'name' => (object) [
+          'columns' => [
+            0 => 'name',
+            1 => 'deleted'
+          ]
+        ],
+        'assignedUser' => (object) [
+          'columns' => [
+            0 => 'assignedUserId',
+            1 => 'deleted'
+          ]
+        ],
+        'createdAt' => (object) [
+          'columns' => [
+            0 => 'createdAt'
+          ]
+        ],
+        'createdAtId' => (object) [
+          'unique' => true,
+          'columns' => [
+            0 => 'createdAt',
+            1 => 'id'
+          ]
+        ]
+      ],
+      'optimisticConcurrencyControl' => false
     ]
   ],
   'fields' => (object) [
@@ -30902,6 +31124,30 @@ return (object) [
       'beforeUnlinkHookClassNameList' => [],
       'afterLinkHookClassNameList' => [],
       'afterUnlinkHookClassNameList' => []
+    ],
+    'CCarServiceRequest' => (object) [
+      'duplicateWhereBuilderClassName' => 'Espo\\Classes\\DuplicateWhereBuilders\\General',
+      'updateDuplicateCheck' => false,
+      'readLoaderClassNameList' => [],
+      'listLoaderClassNameList' => [],
+      'saverClassNameList' => [],
+      'selectApplierClassNameList' => [],
+      'createInputFilterClassNameList' => [],
+      'updateInputFilterClassNameList' => [],
+      'outputFilterClassNameList' => [],
+      'beforeReadHookClassNameList' => [],
+      'earlyBeforeCreateHookClassNameList' => [],
+      'beforeCreateHookClassNameList' => [],
+      'earlyBeforeUpdateHookClassNameList' => [],
+      'beforeUpdateHookClassNameList' => [],
+      'beforeDeleteHookClassNameList' => [],
+      'afterCreateHookClassNameList' => [],
+      'afterUpdateHookClassNameList' => [],
+      'afterDeleteHookClassNameList' => [],
+      'beforeLinkHookClassNameList' => [],
+      'beforeUnlinkHookClassNameList' => [],
+      'afterLinkHookClassNameList' => [],
+      'afterUnlinkHookClassNameList' => []
     ]
   ],
   'scopes' => (object) [
@@ -31818,6 +32064,36 @@ return (object) [
         1 => 'Deferred'
       ],
       'statusFieldLocked' => true
+    ],
+    'CCarServiceRequest' => (object) [
+      'entity' => true,
+      'layouts' => true,
+      'tab' => true,
+      'acl' => true,
+      'aclPortal' => true,
+      'aclPortalLevelList' => [
+        0 => 'all',
+        1 => 'account',
+        2 => 'contact',
+        3 => 'own',
+        4 => 'no'
+      ],
+      'customizable' => true,
+      'importable' => true,
+      'notifications' => true,
+      'stream' => true,
+      'disabled' => false,
+      'type' => 'BasePlus',
+      'module' => 'Custom',
+      'object' => true,
+      'isCustom' => true,
+      'statusField' => NULL,
+      'kanbanStatusIgnoreList' => NULL,
+      'stars' => false,
+      'preserveAuditLog' => false,
+      'duplicateCheckFieldList' => [],
+      'collaborators' => false,
+      'assignedUsers' => false
     ]
   ],
   'selectDefs' => (object) [

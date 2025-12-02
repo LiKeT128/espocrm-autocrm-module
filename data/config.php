@@ -106,7 +106,8 @@ return [
     ],
     26 => 'EmailTemplate',
     27 => 'Template',
-    28 => 'Import'
+    28 => 'Import',
+    29 => 'CCarServiceRequest'
   ],
   'quickCreateList' => [
     0 => 'Account',
@@ -328,8 +329,8 @@ return [
     0 => 'youtube.com',
     1 => 'google.com'
   ],
-  'cacheTimestamp' => 1764172303,
-  'microtime' => 1764172303.127081,
+  'cacheTimestamp' => 1764717310,
+  'microtime' => 1764717310.377802,
   'siteUrl' => 'http://localhost/espocrm',
   'fullTextSearchMinLength' => 4,
   'appTimestamp' => 1764168680

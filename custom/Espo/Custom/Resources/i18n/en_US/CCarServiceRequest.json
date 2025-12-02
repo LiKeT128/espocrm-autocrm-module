@@ -1,0 +1,25 @@
+{
+    "fields": {
+        "customer": "Contact",
+        "carModel": "**carModel**",
+        "serviceType": "**serviceType**"
+    },
+    "links": {
+        "meetings": "Meetings",
+        "calls": "Calls",
+        "tasks": "Tasks",
+        "customer": "Contact"
+    },
+    "labels": {
+        "Create CCarServiceRequest": "Create Car Service Request"
+    },
+    "options": {
+        "serviceType": {
+            "(one per line)": "(one per line)",
+            "Oil Change": "Oil Change",
+            "Tires": "Tires",
+            "Brake Repair": "Brake Repair",
+            "Full Service": "Full Service"
+        }
+    }
+}

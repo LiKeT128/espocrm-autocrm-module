@@ -2793,5 +2793,42 @@ return (object) [
       'readOnly' => [],
       'nonAdminReadOnly' => []
     ]
+  ],
+  'CCarServiceRequest' => (object) [
+    'fields' => (object) [
+      'forbidden' => [],
+      'internal' => [],
+      'onlyAdmin' => [],
+      'readOnly' => [
+        0 => 'createdAt',
+        1 => 'modifiedAt',
+        2 => 'createdBy',
+        3 => 'modifiedBy',
+        4 => 'streamUpdatedAt'
+      ],
+      'nonAdminReadOnly' => []
+    ],
+    'attributes' => (object) [
+      'forbidden' => [],
+      'internal' => [],
+      'onlyAdmin' => [],
+      'readOnly' => [
+        0 => 'createdAt',
+        1 => 'modifiedAt',
+        2 => 'createdById',
+        3 => 'createdByName',
+        4 => 'modifiedById',
+        5 => 'modifiedByName',
+        6 => 'streamUpdatedAt'
+      ],
+      'nonAdminReadOnly' => []
+    ],
+    'links' => (object) [
+      'forbidden' => [],
+      'internal' => [],
+      'onlyAdmin' => [],
+      'readOnly' => [],
+      'nonAdminReadOnly' => []
+    ]
   ]
 ];

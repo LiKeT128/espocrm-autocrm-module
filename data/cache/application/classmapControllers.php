@@ -87,5 +87,6 @@ return [
   'Target' => 'Espo\\Modules\\Crm\\Controllers\\Target',
   'TargetList' => 'Espo\\Modules\\Crm\\Controllers\\TargetList',
   'TargetListCategory' => 'Espo\\Modules\\Crm\\Controllers\\TargetListCategory',
-  'Task' => 'Espo\\Modules\\Crm\\Controllers\\Task'
+  'Task' => 'Espo\\Modules\\Crm\\Controllers\\Task',
+  'CCarServiceRequest' => 'Espo\\Custom\\Controllers\\CCarServiceRequest'
 ];

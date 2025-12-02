@@ -1,0 +1,11 @@
+{
+    "links": {
+        "cCarServiceRequests": {
+            "type": "hasMany",
+            "foreign": "customer",
+            "entity": "CCarServiceRequest",
+            "audited": false,
+            "isCustom": true
+        }
+    }
+}

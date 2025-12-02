@@ -1,0 +1,26 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "name"
+                }
+            ],
+            [
+                {
+                    "name": "customer"
+                },
+                {
+                    "name": "carModel"
+                }
+            ],
+            [
+                {
+                    "name": "serviceType"
+                }
+            ]
+        ],
+        "style": "default",
+        "label": "Overview"
+    }
+]

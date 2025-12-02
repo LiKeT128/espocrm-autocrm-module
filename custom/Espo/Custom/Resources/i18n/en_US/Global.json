@@ -1,0 +1,8 @@
+{
+    "scopeNames": {
+        "CCarServiceRequest": "Car Service Request"
+    },
+    "scopeNamesPlural": {
+        "CCarServiceRequest": "Car Service Requests"
+    }
+}
